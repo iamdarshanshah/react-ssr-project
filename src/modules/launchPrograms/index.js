@@ -15,9 +15,9 @@ class HomeComponent extends React.Component {
       spacexLaunchData: [],
       years: ["2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"],
       boolean: ["true", "false"],
-      launchStatus: undefined,
-      landStatus: undefined,
-      selectedYear: undefined,
+      launchStatus: "",
+      landStatus: "",
+      selectedYear: "",
       isLoading: true,
       hasError: false
     }
@@ -124,7 +124,7 @@ class HomeComponent extends React.Component {
                     {years.map((year, i) => {
                       return (
                         <Grid item key={i} xs={6}>
-                          <Button color="secondary" variant="contained" onClick={() => this.applyYearFilter(year)}>{year}</Button>
+                          <Button color={this.state.selectedYear === year ? "primary" : "secondary"} variant="contained" onClick={() => this.applyYearFilter(year)}>{year}</Button>
                         </Grid>)
                     })}
                   </Grid>
@@ -144,7 +144,7 @@ class HomeComponent extends React.Component {
                     {boolean.map((bool, i) => {
                       return (
                         <Grid item key={i} xs={6}>
-                          <Button color="secondary" variant="contained" onClick={() => this.applyLaunchFilter(bool)}>{bool}</Button>
+                          <Button color={this.state.launchStatus === bool ? "primary" : "secondary"} variant="contained" onClick={() => this.applyLaunchFilter(bool)}>{bool}</Button>
                         </Grid>)
                     })}
                   </Grid>
@@ -164,7 +164,7 @@ class HomeComponent extends React.Component {
                     {boolean.map((bool, i) => {
                       return (
                         <Grid item key={i} xs={6}>
-                          <Button color="secondary" variant="contained" onClick={() => this.applyLandFilter(bool)}>{bool}</Button>
+                          <Button color={this.state.landStatus === bool ? "primary" : "secondary"} variant="contained" onClick={() => this.applyLandFilter(bool)}>{bool}</Button>
                         </Grid>)
                     })}
                   </Grid>
