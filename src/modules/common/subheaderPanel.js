@@ -21,7 +21,7 @@ export default class SubHeaderPanel extends React.Component {
       <Grid item xs={12} style={{ background: "#ececec" }}>
         <Grid container alignItems="center">
           <Grid item style={{ marginLeft: "1%" }}>
-            <Typography variant="h5">{subHeaderText}</Typography>
+            <Typography variant="h5"><strong>{subHeaderText}</strong></Typography>
           </Grid>
         </Grid>
       </Grid>

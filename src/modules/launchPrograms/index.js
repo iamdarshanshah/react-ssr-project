@@ -1,11 +1,11 @@
 import React from 'react';
 
-import SpaceXService from "../../services/spacexDataService";
 import { Grid, Button, Typography, Divider } from '@material-ui/core';
+
 import ProgramCard from './programCard';
 import SubHeaderPanel from '../common/subheaderPanel';
 import LoadingPlaceholder from '../common/loadingPlaceholder';
-
+import SpaceXService from "../../services/spacexDataService";
 
 class HomeComponent extends React.Component {
 
@@ -47,8 +47,8 @@ class HomeComponent extends React.Component {
     console.log(this.state);
   }
 
-
-  clearFilters() {
+  // future scope, to be able to reset the applied filters
+  resetFilters() {
     this.setState({
       selectedYear: undefined,
       launchStatus: undefined,
