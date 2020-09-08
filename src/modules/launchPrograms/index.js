@@ -15,12 +15,20 @@ class HomeComponent extends React.Component {
       spacexLaunchData: [],
       years: ["2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"],
       boolean: ["true", "false"],
+      launchStatus: undefined,
+      landStatus: undefined,
+      selectedYear: undefined,
+      isLoading: true,
+      hasError: false
     }
   }
 
   componentDidMount() {
     SpaceXService.getAllLaunchDetails((err, results) => {
-      this.setState({ spacexLaunchData: results });
+      if (err) {
+        return this.setState({ hasError: true, isLoading: false });
+      }
+      this.setState({ spacexLaunchData: results, isLoading: false });
     })
   }
 
@@ -44,7 +52,19 @@ class HomeComponent extends React.Component {
 
 
   getFilteredResults() {
-    console.log(this.state);
+    this.setState({ isLoading: true })
+    const options = {
+      launch_success: this.state.launchStatus,
+      land_success: this.state.landStatus,
+      launch_year: this.state.selectedYear,
+    }
+    SpaceXService.getLaunchDetailsByQuery(options, (err, results) => {
+      if (err) {
+        return this.setState({ hasError: true, isLoading: false });
+      }
+      console.log('Result Length ::', results.length);
+      this.setState({ spacexLaunchData: results, isLoading: false });
+    })
   }
 
   // future scope, to be able to reset the applied filters
@@ -58,125 +78,138 @@ class HomeComponent extends React.Component {
 
   render() {
     const { spacexLaunchData, years, boolean } = this.state;
-    return (
-      <React.Fragment>
-        <Grid container style={{ marginBottom: "10px" }}>
-          <SubHeaderPanel subHeaderText={"SpaceX Launch Programs"}></SubHeaderPanel>
-        </Grid>
-        {/* Main Data Rendering Logic */}
-        <Grid container direction="row"
-          justify="space-evenly"
-          alignItems="flex-start"
-        >
-          {/* Filter options Rendering logic */}
-          <Grid item xs={10} sm={2}>
+    if (this.state.hasError) {
+      return <Typography variant="h3" aling="center">{"Sorry, something went wrong. Please try again later."}</Typography>
+    } else {
+      return (
+        <React.Fragment>
+          <Grid container style={{ marginBottom: "10px" }}>
+            <SubHeaderPanel subHeaderText={"SpaceX Launch Programs"}></SubHeaderPanel>
+          </Grid>
+          {/* Main Data Rendering Logic */}
+          <Grid container direction="row"
+            justify="space-evenly"
+            alignItems="flex-start"
+          >
+            {/* Filter options Rendering logic */}
+            <Grid item xs={10} sm={2}>
 
-            <Grid container direction="column"
-              justify="flex-start"
-              alignItems="center"
-              spacing={2}
-            >
+              <Grid container direction="column"
+                justify="flex-start"
+                alignItems="center"
+                spacing={2}
+              >
 
-              <Grid item xs={12}>
-                <Grid container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="flex-start"
-                  spacing={2}
-                >
-                  <Grid item xs={12}>
-                    <Typography align="left" variant="h5"><strong>{"Filters"}</strong></Typography>
+                <Grid item xs={12}>
+                  <Grid container
+                    spacing={2}
+                  >
+                    <Grid item xs={12}>
+                      <Typography align="left" variant="h5"><strong>{"Filters"}</strong></Typography>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
 
-              <Grid item xs={12}>
-                <Grid container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="center"
-                  spacing={2}
-                >
-                  <Grid item xs={12}>
-                    <Typography align="center">{"Launch year"}</Typography>
-                    <Divider />
+                <Grid item xs={12}>
+                  <Grid container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                    spacing={2}
+                  >
+                    <Grid item xs={12}>
+                      <Typography align="center">{"Launch year"}</Typography>
+                      <Divider />
+                    </Grid>
+                    {years.map((year, i) => {
+                      return (
+                        <Grid item key={i} xs={6}>
+                          <Button color="secondary" variant="contained" onClick={() => this.applyYearFilter(year)}>{year}</Button>
+                        </Grid>)
+                    })}
                   </Grid>
-                  {years.map((year, i) => {
-                    return (
-                      <Grid item key={i} xs={6}>
-                        <Button color="secondary" variant="contained" onClick={() => this.applyYearFilter(year)}>{year}</Button>
-                      </Grid>)
-                  })}
                 </Grid>
-              </Grid>
 
-              <Grid item xs={12}>
-                <Grid container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="center"
-                  spacing={2}
-                >
-                  <Grid item xs={12}>
-                    <Typography align="center">{"Successful Launch"}</Typography>
-                    <Divider />
+                <Grid item xs={12}>
+                  <Grid container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                    spacing={2}
+                  >
+                    <Grid item xs={12}>
+                      <Typography align="center">{"Successful Launch"}</Typography>
+                      <Divider />
+                    </Grid>
+                    {boolean.map((bool, i) => {
+                      return (
+                        <Grid item key={i} xs={6}>
+                          <Button color="secondary" variant="contained" onClick={() => this.applyLaunchFilter(bool)}>{bool}</Button>
+                        </Grid>)
+                    })}
                   </Grid>
-                  {boolean.map((bool, i) => {
-                    return (
-                      <Grid item key={i} xs={6}>
-                        <Button color="secondary" variant="contained" onClick={() => this.applyLaunchFilter(bool)}>{bool}</Button>
-                      </Grid>)
-                  })}
                 </Grid>
-              </Grid>
 
-              <Grid item xs={12}>
-                <Grid container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="center"
-                  spacing={2}
-                >
-                  <Grid item xs={12}>
-                    <Typography align="center">{"Successfull Landing"}</Typography>
-                    <Divider />
+                <Grid item xs={12}>
+                  <Grid container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                    spacing={2}
+                  >
+                    <Grid item xs={12}>
+                      <Typography align="center">{"Successfull Landing"}</Typography>
+                      <Divider />
+                    </Grid>
+                    {boolean.map((bool, i) => {
+                      return (
+                        <Grid item key={i} xs={6}>
+                          <Button color="secondary" variant="contained" onClick={() => this.applyLandFilter(bool)}>{bool}</Button>
+                        </Grid>)
+                    })}
                   </Grid>
-                  {boolean.map((bool, i) => {
-                    return (
-                      <Grid item key={i} xs={6}>
-                        <Button color="secondary" variant="contained" onClick={() => this.applyLandFilter(bool)}>{bool}</Button>
-                      </Grid>)
-                  })}
                 </Grid>
+
               </Grid>
 
             </Grid>
-
-          </Grid>
-          {/* Cards rendering logic */}
-          <Grid item xs={10} sm={9}>
-            {spacexLaunchData.length ?
-              <Grid container direction="row" justify="space-evenly"
-                alignItems="center" spacing={2}>
-                {spacexLaunchData.map((programData, i) => {
-                  return (
-                    <Grid item key={i} xs={12} sm={3}>
-                      <ProgramCard programData={programData}></ProgramCard>
-                    </Grid>)
-                })}
-              </Grid>
-              : <Grid container
-                direction="row"
-                justify="center"
-                alignItems="center"
-              >
-                <Grid item xs={10}>
-                  <LoadingPlaceholder />
+            {/* Cards rendering logic */}
+            <Grid item xs={10} sm={9}>
+              {!this.state.isLoading ?
+                (spacexLaunchData.length ?
+                  <Grid container direction="row" justify="space-evenly"
+                    alignItems="center" spacing={2}>
+                    {spacexLaunchData.map((programData, i) => {
+                      return (
+                        <Grid item key={i} xs={12} sm={3}>
+                          <ProgramCard programData={programData}></ProgramCard>
+                        </Grid>)
+                    })}
+                  </Grid>
+                  : <Grid container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Grid item xs={10}>
+                      <Typography variant="h3" aling="center">{"No data found for the selected filters. Try resetting the filters."}</Typography>
+                    </Grid>
+                  </Grid>)
+                :
+                <Grid container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                >
+                  <Grid item xs={10}>
+                    <LoadingPlaceholder />
+                  </Grid>
                 </Grid>
-              </Grid>}
+              }
+            </Grid>
           </Grid>
-        </Grid>
-      </React.Fragment>)
+        </React.Fragment>)
+    }
   }
 
 }
