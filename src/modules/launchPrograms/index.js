@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SpaceXService from "../../services/spacexDataService";
-import { Grid } from '@material-ui/core';
+import { Grid, Button, Typography, Divider } from '@material-ui/core';
 import ProgramCard from './programCard';
 import SubHeaderPanel from '../common/subheaderPanel';
 import LoadingPlaceholder from '../common/loadingPlaceholder';
@@ -12,37 +12,155 @@ class HomeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      spacexLaunchData: []
+      spacexLaunchData: [],
+      years: ["2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"],
+      boolean: ["true", "false"],
     }
   }
 
   componentDidMount() {
     SpaceXService.getAllLaunchDetails((err, results) => {
-      console.log(results);
       this.setState({ spacexLaunchData: results });
     })
   }
 
+  applyYearFilter(year) {
+    this.setState({ selectedYear: year }, () => {
+      this.getFilteredResults();
+    });
+  }
+
+  applyLaunchFilter(launch) {
+    this.setState({ launchStatus: launch }, () => {
+      this.getFilteredResults();
+    });
+  }
+
+  applyLandFilter(land) {
+    this.setState({ landStatus: land }, () => {
+      this.getFilteredResults();
+    });
+  }
+
+
+  getFilteredResults() {
+    console.log(this.state);
+  }
+
+
+  clearFilters() {
+    this.setState({
+      selectedYear: undefined,
+      launchStatus: undefined,
+      landStatus: undefined
+    })
+  }
+
   render() {
-    const { spacexLaunchData } = this.state;
+    const { spacexLaunchData, years, boolean } = this.state;
     return (
       <React.Fragment>
         <Grid container style={{ marginBottom: "10px" }}>
           <SubHeaderPanel subHeaderText={"SpaceX Launch Programs"}></SubHeaderPanel>
         </Grid>
+        {/* Main Data Rendering Logic */}
         <Grid container direction="row"
           justify="space-evenly"
-          alignItems="flex-start">
+          alignItems="flex-start"
+        >
+          {/* Filter options Rendering logic */}
           <Grid item xs={10} sm={2}>
-            <div>Heyyy</div>
+
+            <Grid container direction="column"
+              justify="flex-start"
+              alignItems="center"
+              spacing={2}
+            >
+
+              <Grid item xs={12}>
+                <Grid container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="flex-start"
+                  spacing={2}
+                >
+                  <Grid item xs={12}>
+                    <Typography align="left" variant="h5"><strong>{"Filters"}</strong></Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Grid container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid item xs={12}>
+                    <Typography align="center">{"Launch year"}</Typography>
+                    <Divider />
+                  </Grid>
+                  {years.map((year, i) => {
+                    return (
+                      <Grid item key={i} xs={6}>
+                        <Button color="secondary" variant="contained" onClick={() => this.applyYearFilter(year)}>{year}</Button>
+                      </Grid>)
+                  })}
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Grid container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid item xs={12}>
+                    <Typography align="center">{"Successful Launch"}</Typography>
+                    <Divider />
+                  </Grid>
+                  {boolean.map((bool, i) => {
+                    return (
+                      <Grid item key={i} xs={6}>
+                        <Button color="secondary" variant="contained" onClick={() => this.applyLaunchFilter(bool)}>{bool}</Button>
+                      </Grid>)
+                  })}
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Grid container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid item xs={12}>
+                    <Typography align="center">{"Successfull Landing"}</Typography>
+                    <Divider />
+                  </Grid>
+                  {boolean.map((bool, i) => {
+                    return (
+                      <Grid item key={i} xs={6}>
+                        <Button color="secondary" variant="contained" onClick={() => this.applyLandFilter(bool)}>{bool}</Button>
+                      </Grid>)
+                  })}
+                </Grid>
+              </Grid>
+
+            </Grid>
+
           </Grid>
+          {/* Cards rendering logic */}
           <Grid item xs={10} sm={9}>
             {spacexLaunchData.length ?
               <Grid container direction="row" justify="space-evenly"
                 alignItems="center" spacing={2}>
                 {spacexLaunchData.map((programData, i) => {
                   return (
-                    <Grid item key={i} item xs={12} sm={3}>
+                    <Grid item key={i} xs={12} sm={3}>
                       <ProgramCard programData={programData}></ProgramCard>
                     </Grid>)
                 })}
