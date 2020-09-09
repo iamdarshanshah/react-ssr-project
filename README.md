@@ -3,6 +3,7 @@
 ## Deployed on heroku
 
 - **URL** - `https://app-spacex-launch.herokuapp.com/`
+- **App Screenshots** - `app-screenshots` folder in repository.
 
 ## How to Run in local
 
