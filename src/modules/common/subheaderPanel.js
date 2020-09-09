@@ -6,15 +6,6 @@ import Grid from '@material-ui/core/Grid';
 
 export default class SubHeaderPanel extends React.PureComponent {
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps &&
-      !(this.props.subHeaderText === nextProps.subHeaderText)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   render() {
     const { subHeaderText } = this.props;
     return (
@@ -27,6 +18,7 @@ export default class SubHeaderPanel extends React.PureComponent {
       </Grid>
     )
   }
+
 }
 
 
