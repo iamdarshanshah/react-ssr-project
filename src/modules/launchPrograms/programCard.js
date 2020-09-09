@@ -1,7 +1,8 @@
+// react imports
 import React from 'react';
 import PropTypes from 'prop-types'; // validating proptypes
 
-// Material UI imports
+// material ui imports
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -16,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-// functional cmponent
+// functional component using react hooks api
 export default function ProgramCard(props) {
   const classes = useStyles();
 

@@ -1,9 +1,12 @@
+// react imports
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// material ui imports
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
+// class component
 export default class SubHeaderPanel extends React.PureComponent {
 
   render() {

@@ -1,3 +1,4 @@
+// entry point
 require('ignore-styles');
 
 require('@babel/register')({

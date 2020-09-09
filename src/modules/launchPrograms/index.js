@@ -1,12 +1,16 @@
+// react imports
 import React from 'react';
 
+// material ui imports
 import { Grid, Button, Typography, Divider } from '@material-ui/core';
 
+// components and service imports
 import ProgramCard from './programCard';
 import SubHeaderPanel from '../common/subheaderPanel';
 import LoadingPlaceholder from '../common/loadingPlaceholder';
 import SpaceXService from "../../services/spacexDataService";
 
+// class component
 class HomeComponent extends React.PureComponent {
 
   constructor(props) {
@@ -62,7 +66,6 @@ class HomeComponent extends React.PureComponent {
       if (err) {
         return this.setState({ hasError: true, isLoading: false });
       }
-      console.log('Result Length ::', results.length);
       this.setState({ spacexLaunchData: results, isLoading: false });
     })
   }

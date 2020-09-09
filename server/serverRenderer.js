@@ -1,3 +1,4 @@
+// functionality to perform ssr for APP component
 import App from '../src/App';
 
 const path = require('path');
