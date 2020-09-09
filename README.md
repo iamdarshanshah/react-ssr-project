@@ -34,6 +34,8 @@ npm run serve
 
 - open `localhost:8000` in browser
 
+- **Perform Lint Checks** - `npm run lint`
+
 ## Configured for CI
 
 - Gitlab CI `(.gitlab-ci.yml)`
