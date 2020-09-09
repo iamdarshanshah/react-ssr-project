@@ -1,4 +1,8 @@
-# SpaceX Launch App (FrontEnd application with partial SSR)
+# SpaceX Launch App (A FrontEnd application with partial SSR)
+
+## Deployed on heroku
+
+- **URL** - `https://app-spacex-launch.herokuapp.com/`
 
 ## How to Run in local
 
@@ -38,3 +42,5 @@ npm run serve
 - Docker and Docker-Compose (For containerization and deployment)
 - Gitlab CI (For creating a CI pipeline for automation and quality checks)
 - NPM (Package Manager)
+
+**NOTE** - Used public apis for powering application with data
