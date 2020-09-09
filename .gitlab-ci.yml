@@ -1,0 +1,17 @@
+stages:
+  - build
+  - quality-check
+
+buildWebapp:
+  image: node:12-alpine
+  stage: build
+  script:
+    - npm install
+    - npm run build
+
+lintWebapp:
+  image: node:12-alpine
+  stage: quality-check
+  script:
+    - npm install
+    - npm run lint
