@@ -34,6 +34,11 @@ npm run serve
 
 - open `localhost:8000` in browser
 
+## Configured for CI
+
+- Gitlab CI `(.gitlab-ci.yml)`
+- Github Workflows
+
 ## Tech Stack Used
 
 - ReactJS (Front end development library)
