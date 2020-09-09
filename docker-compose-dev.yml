@@ -7,6 +7,6 @@ services:
     entrypoint:
       - /bin/sh
       - -c
-      - npm run serve
+      - npm run start
     ports:
       - "8000:8000"

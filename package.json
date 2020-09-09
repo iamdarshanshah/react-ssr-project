@@ -22,10 +22,10 @@
     "superagent": "^6.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "serve": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "serve": "node server/index.js"
+    "start": "node server/index.js"
   },
   "eslintConfig": {
     "extends": "react-app"
