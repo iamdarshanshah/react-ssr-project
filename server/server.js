@@ -6,11 +6,11 @@ const router = express.Router();
 const path = require('path');
 const ssr = require('./serverRenderer');
 
-router.use('^/$', ssr.serverRenderer);
-
 router.use(
   express.static(path.resolve(__dirname, '..', 'build'))
 );
+
+router.use('^/$', ssr.serverRenderer);
 
 app.use(router);
 

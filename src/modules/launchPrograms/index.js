@@ -7,7 +7,7 @@ import SubHeaderPanel from '../common/subheaderPanel';
 import LoadingPlaceholder from '../common/loadingPlaceholder';
 import SpaceXService from "../../services/spacexDataService";
 
-class HomeComponent extends React.Component {
+class HomeComponent extends React.PureComponent {
 
   constructor(props) {
     super(props);
