@@ -5,7 +5,7 @@ import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 // functional component
-export default function LoadingPlaceholder(props) {
+export default function LoadingPlaceholder() {
   return (
     <CircularProgress />
   );
