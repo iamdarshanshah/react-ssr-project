@@ -98,7 +98,7 @@ class HomeComponent extends React.PureComponent {
             <Grid item xs={10} sm={2}>
 
               <Grid container direction="column"
-                justify="flex-start"
+                justify="center"
                 alignItems="center"
                 spacing={2}
               >
@@ -116,7 +116,7 @@ class HomeComponent extends React.PureComponent {
                 <Grid item xs={12}>
                   <Grid container
                     direction="row"
-                    justify="space-evenly"
+                    justify="center"
                     alignItems="center"
                     spacing={2}
                   >
@@ -127,7 +127,13 @@ class HomeComponent extends React.PureComponent {
                     {years.map((year, i) => {
                       return (
                         <Grid item key={i} xs={6}>
-                          <Button color={this.state.selectedYear === year ? "primary" : "secondary"} variant="contained" onClick={() => this.applyYearFilter(year)}>{year}</Button>
+                          <Grid container direction="row"
+                            justify="center"
+                            alignItems="center">
+                            <Grid item>
+                              <Button color={this.state.selectedYear === year ? "primary" : "secondary"} variant="contained" onClick={() => this.applyYearFilter(year)}>{year}</Button>
+                            </Grid>
+                          </Grid>
                         </Grid>)
                     })}
                   </Grid>
@@ -136,7 +142,7 @@ class HomeComponent extends React.PureComponent {
                 <Grid item xs={12}>
                   <Grid container
                     direction="row"
-                    justify="space-evenly"
+                    justify="center"
                     alignItems="center"
                     spacing={2}
                   >
@@ -147,7 +153,13 @@ class HomeComponent extends React.PureComponent {
                     {boolean.map((bool, i) => {
                       return (
                         <Grid item key={i} xs={6}>
-                          <Button color={this.state.launchStatus === bool ? "primary" : "secondary"} variant="contained" onClick={() => this.applyLaunchFilter(bool)}>{bool}</Button>
+                          <Grid container direction="row"
+                            justify="center"
+                            alignItems="center">
+                            <Grid item>
+                              <Button color={this.state.launchStatus === bool ? "primary" : "secondary"} variant="contained" onClick={() => this.applyLaunchFilter(bool)}>{bool}</Button>
+                            </Grid>
+                          </Grid>
                         </Grid>)
                     })}
                   </Grid>
@@ -156,7 +168,7 @@ class HomeComponent extends React.PureComponent {
                 <Grid item xs={12}>
                   <Grid container
                     direction="row"
-                    justify="space-evenly"
+                    justify="center"
                     alignItems="center"
                     spacing={2}
                   >
@@ -167,7 +179,13 @@ class HomeComponent extends React.PureComponent {
                     {boolean.map((bool, i) => {
                       return (
                         <Grid item key={i} xs={6}>
-                          <Button color={this.state.landStatus === bool ? "primary" : "secondary"} variant="contained" onClick={() => this.applyLandFilter(bool)}>{bool}</Button>
+                          <Grid container direction="row"
+                            justify="center"
+                            alignItems="center">
+                            <Grid item>
+                              <Button color={this.state.landStatus === bool ? "primary" : "secondary"} variant="contained" onClick={() => this.applyLandFilter(bool)}>{bool}</Button>
+                            </Grid>
+                          </Grid>
                         </Grid>)
                     })}
                   </Grid>
@@ -180,11 +198,11 @@ class HomeComponent extends React.PureComponent {
             <Grid item xs={10} sm={9}>
               {!this.state.isLoading ?
                 (spacexLaunchData.length ?
-                  <Grid container direction="row" justify="space-evenly"
+                  <Grid container direction="row" justify="center"
                     alignItems="center" spacing={2}>
                     {spacexLaunchData.map((programData, i) => {
                       return (
-                        <Grid item key={i} xs={12} sm={3}>
+                        <Grid item key={i} xs={12} sm={6} md={6} lg={3}>
                           <ProgramCard programData={programData}></ProgramCard>
                         </Grid>)
                     })}
