@@ -86,7 +86,6 @@ class HomeComponent extends React.PureComponent {
 
   render() {
     const { spacexLaunchData, years, boolean } = this.state;
-    {/* Main Data Rendering Logic */ }
     if (this.state.hasError) {
       return <Typography variant="h3" aling="center">{"Sorry, something went wrong. Please try again later."}</Typography>
     } else {
