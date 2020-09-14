@@ -75,7 +75,13 @@ class HomeComponent extends React.PureComponent {
       selectedYear: undefined,
       launchStatus: undefined,
       landStatus: undefined
-    })
+    });
+    SpaceXService.getAllLaunchDetails((err, results) => {
+      if (err) {
+        return this.setState({ hasError: true, isLoading: false });
+      }
+      this.setState({ spacexLaunchData: results, isLoading: false });
+    });
   }
 
   render() {
@@ -90,7 +96,7 @@ class HomeComponent extends React.PureComponent {
           alignItems="flex-start"
         >
           {/* Filter options Rendering logic */}
-          <Grid item xs={10} sm={2}>
+          <Grid item xs={10} sm={4} md={2}>
 
             <Grid container direction="column"
               justify="center"
@@ -186,11 +192,31 @@ class HomeComponent extends React.PureComponent {
                 </Grid>
               </Grid>
 
+              {/* Reset filters */}
+              <Grid item xs={12}>
+                <Grid container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid item xs={12}>
+                    <Grid container direction="row"
+                      justify="center"
+                      alignItems="center">
+                      <Grid item>
+                        <Button style={{ background: "#f58039" }} variant="contained" onClick={() => this.resetFilters()}>{"Reset Filters"}</Button>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+
             </Grid>
 
           </Grid>
           {/* Cards rendering logic */}
-          <Grid item xs={10} sm={9}>
+          <Grid item xs={10} sm={7} md={9}>
             {!this.state.isLoading ?
               (spacexLaunchData.length ?
                 <Grid container direction="row" justify="center"
